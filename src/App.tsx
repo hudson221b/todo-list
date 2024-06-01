@@ -12,6 +12,7 @@ function App() {
     setIsAdding(false)
     const newTodos = [inputValue, ...todos]
     setTodos(newTodos)
+    setInputValue("")
   }
   return (
     <div className="container">
