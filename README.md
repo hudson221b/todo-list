@@ -10,3 +10,8 @@
   - is normally used to keep track of an entity that persists thru renders. The entity can be a value, or a real DOM node
   - in our case, it is used to represent the input element when adding a new todo
   - since the real DOM only shows up when a state `isAdding` is true, the assignment of `ref.current` occurs in `useEffect` 
+- ### data flow from child to parent
+  - parent needs a set of data to display on the first-render (App has all todos as a state)
+  - the individual change of each todo is done on the child level (each todo can change its own `checked` status, and delete itself)
+  - in other words, child component needs to be able to edit parent's state
+  - we achieve this by creating callbacks in the parent and pass them down to child as props
