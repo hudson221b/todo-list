@@ -13,7 +13,7 @@ function App() {
     (id: string) => {
       const todoBeingEdited = todos.find(todo => todo.id === id)
       todoBeingEdited!.checked = !todoBeingEdited?.checked
-      setTodos([...todos, todoBeingEdited!])
+      setTodos([...todos])
     },
     [todos]
   )
@@ -22,6 +22,7 @@ function App() {
     (id: string) => {
       const indexBeingRemoved = todos.findIndex(todo => todo.id === id)
       todos.splice(indexBeingRemoved, 1)
+      setTodos([...todos])
     },
     [todos]
   )
