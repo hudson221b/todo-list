@@ -1,46 +1,12 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### This is a small practice using create-react-app to help understand some basic but important concepts. This app utilizes no state management tool or backend, but stresses the following areas:
+- ### "shallow comparison" of state in React
+  - when the state is a reference type, React compares the `reference value` of previous state and new state
+  - a reference data type is one that can be accessed by reference rather than by value, such as objects, arrays, functions
+  - a reference type's content can be mutated without changing the reference
+  - hence for React to detect a change and triggers re-render, new state must have a difference reference value
+- ### what should be a `state` or not
+  - keep in mind the "data-driven" philosophy, the data that is used to dispaly UI or relfect UI changes should be a state, otherwise, we should think of a better place or another way to manage such data
+- ### `useRef` usage case
+  - is normally used to keep track of an entity that persists thru renders. The entity can be a value, or a real DOM node
+  - in our case, it is used to represent the input element when adding a new todo
+  - since the real DOM only shows up when a state `isAdding` is true, the assignment of `ref.current` occurs in `useEffect` 
