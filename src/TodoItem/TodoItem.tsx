@@ -1,4 +1,4 @@
-import "./list-item.css"
+import "./list-item.scss"
 
 export type Todo = {
   id: string
@@ -12,16 +12,24 @@ export const TodoItem = (props: {
   handleRemove: (id: string) => void
 }) => {
   const { data, handleCheck, handleRemove } = props
+  const inputClassNames = data.checked
+    ? "todo-item__checkbox checked"
+    : "todo-item__checkbox"
+
+  const descClassNames = data.checked
+    ? "todo-item__description checked"
+    : "todo-item__description"
   return (
-    <div className="list-item" key={data.id}>
-      <input
-        className="list-item__checkbox"
-        placeholder={`${data.checked}`}
+    <div className="todo-item" key={data.id}>
+      <div
+        className={inputClassNames}
         onClick={() => handleCheck(data.id)}
-      />
-      <span className="list-item__description">{data.description}</span>
+      >
+        {data.checked ? "Y" : null}
+      </div>
+      <span className={descClassNames}>{data.description}</span>
       <span
-        className="list-item__delete-button"
+        className="todo-item__delete-button"
         onClick={() => handleRemove(data.id)}
       >
         Delete
