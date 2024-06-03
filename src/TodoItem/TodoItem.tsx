@@ -1,4 +1,3 @@
-import React, { useState } from "react"
 import "./list-item.css"
 
 export type Todo = {
@@ -7,13 +6,12 @@ export type Todo = {
   description: string
 }
 
-export const ListItem = (props: {
+export const TodoItem = (props: {
   data: Todo
   handleCheck: (id: string) => void
   handleRemove: (id: string) => void
 }) => {
   const { data, handleCheck, handleRemove } = props
-
   return (
     <div className="list-item" key={data.id}>
       <input

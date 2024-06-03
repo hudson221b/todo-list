@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { v4 } from "uuid"
 import "./App.css"
-import { ListItem, Todo } from "./ListItem/ListItem"
+import { TodoItem, Todo } from "./TodoItem/TodoItem"
+// import data from "./data.json"
 
 function App() {
   const [isAdding, setIsAdding] = useState<boolean>(false)
@@ -9,28 +10,23 @@ function App() {
   const [inputValue, setInputValue] = useState<string>("")
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleCheck = useCallback(
-    (id: string) => {
-      const todoBeingEdited = todos.find(todo => todo.id === id)
-      todoBeingEdited!.checked = !todoBeingEdited?.checked
-      setTodos([...todos])
-    },
-    [todos]
-  )
+  const handleCheck = useCallback((id: string) => {
+    setTodos(prevState =>
+      prevState.map(todo =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      )
+    )
+  }, [])
 
-  const handleRemove = useCallback(
-    (id: string) => {
-      const indexBeingRemoved = todos.findIndex(todo => todo.id === id)
-      todos.splice(indexBeingRemoved, 1)
-      setTodos([...todos])
-    },
-    [todos]
-  )
+  const handleRemove = useCallback((id: string) => {
+    setTodos(prevState => prevState.filter(todo => todo.id !== id))
+  }, [])
 
   const listItems = useMemo(
     () =>
       todos.map(todo => (
-        <ListItem
+        <TodoItem
+          key={todo.id}
           data={todo}
           handleCheck={handleCheck}
           handleRemove={handleRemove}
