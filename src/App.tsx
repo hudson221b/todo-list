@@ -1,17 +1,31 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import "./App.css"
+import { ListItem } from "./ListItem/ListItem"
+
+type Todo = {
+  id: string
+  checked: boolean
+  description: string
+}
 
 function App() {
   const [isAdding, setIsAdding] = useState<boolean>(false)
-  const [todos, setTodos] = useState<string[]>([])
+  const [todos, setTodos] = useState<Todo[]>([])
   const [inputValue, setInputValue] = useState<string>("")
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const listItems = useMemo(() => todos.map(todo => <li>{todo}</li>), [todos])
+  const listItems = useMemo(
+    () =>
+      todos.map(todo => (
+        <ListItem checked={todo.checked} desc={todo.description} id={todo.id} />
+      )),
+    [todos]
+  )
 
   const create = () => {
     setIsAdding(false)
-    const newTodos = [inputValue, ...todos]
+    const newItem = { description: inputValue, id: "random", checked: false }
+    const newTodos = [newItem, ...todos]
     setTodos(newTodos)
     setInputValue("")
   }
