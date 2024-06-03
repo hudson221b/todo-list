@@ -3,11 +3,11 @@ import { v4 } from "uuid"
 import logo from "./logo.svg"
 import "./App.css"
 import { TodoItem, Todo } from "./TodoItem/TodoItem"
-// import data from "./data.json"
+import data from "./data.json"
 
 function App() {
   const [isAdding, setIsAdding] = useState<boolean>(false)
-  const [todos, setTodos] = useState<Todo[]>([])
+  const [todos, setTodos] = useState<Todo[]>(data.todos)
   const [inputValue, setInputValue] = useState<string>("")
   const inputRef = useRef<HTMLInputElement>(null)
 
