@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { v4 } from "uuid"
+import logo from "./logo.svg"
 import "./App.css"
 import { TodoItem, Todo } from "./TodoItem/TodoItem"
 // import data from "./data.json"
@@ -51,7 +52,11 @@ function App() {
   }, [isAdding])
 
   return (
-    <div className="container">
+    <div className="app">
+      <header className="header">
+        <img src={logo} className="app-logo" alt="logo" />
+        <p>Learn React</p>
+      </header>
       <h1>My Todo List</h1>
       {listItems}
       {isAdding ? (
