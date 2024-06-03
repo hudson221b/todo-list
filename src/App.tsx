@@ -1,12 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { v4 } from "uuid"
 import "./App.css"
-import { ListItem } from "./ListItem/ListItem"
-
-type Todo = {
-  id: string
-  checked: boolean
-  description: string
-}
+import { ListItem, Todo } from "./ListItem/ListItem"
 
 function App() {
   const [isAdding, setIsAdding] = useState<boolean>(false)
@@ -14,20 +9,42 @@ function App() {
   const [inputValue, setInputValue] = useState<string>("")
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const handleCheck = useCallback(
+    (id: string) => {
+      const todoBeingEdited = todos.find(todo => todo.id === id)
+      todoBeingEdited!.checked = !todoBeingEdited?.checked
+      setTodos([...todos, todoBeingEdited!])
+    },
+    [todos]
+  )
+
+  const handleRemove = useCallback(
+    (id: string) => {
+      const indexBeingRemoved = todos.findIndex(todo => todo.id === id)
+      todos.splice(indexBeingRemoved, 1)
+    },
+    [todos]
+  )
+
   const listItems = useMemo(
     () =>
       todos.map(todo => (
-        <ListItem checked={todo.checked} desc={todo.description} id={todo.id} />
+        <ListItem
+          data={todo}
+          handleCheck={handleCheck}
+          handleRemove={handleRemove}
+        />
       )),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [todos]
   )
 
   const create = () => {
-    setIsAdding(false)
-    const newItem = { description: inputValue, id: "random", checked: false }
+    const newItem = { description: inputValue, id: v4(), checked: false }
     const newTodos = [newItem, ...todos]
     setTodos(newTodos)
     setInputValue("")
+    setIsAdding(false)
   }
 
   useEffect(() => {
@@ -40,17 +57,18 @@ function App() {
     <div className="container">
       <h1>My Todo List</h1>
       {listItems}
-      <div className="input-container" hidden={!isAdding}>
-        <input
-          onChange={e => setInputValue(e.target.value)}
-          value={inputValue}
-          ref={inputRef}
-        />
-        <button onClick={create}>Create</button>
-      </div>
-      <button onClick={() => setIsAdding(true)} hidden={isAdding}>
-        Add New
-      </button>
+      {isAdding ? (
+        <div className="input-container">
+          <input
+            onChange={e => setInputValue(e.target.value)}
+            value={inputValue}
+            ref={inputRef}
+          />
+          <button onClick={create}>Create</button>
+        </div>
+      ) : (
+        <button onClick={() => setIsAdding(true)}>Add New</button>
+      )}
     </div>
   )
 }
