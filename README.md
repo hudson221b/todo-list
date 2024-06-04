@@ -84,4 +84,4 @@ Is there a way to reduce the amount of memoize and still be able to update state
   )
 ```
 ## Todos
-- [ ]Add styles to app (responsive)
+- [ ] Add styles to app (responsive)
